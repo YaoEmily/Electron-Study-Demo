@@ -3,6 +3,7 @@ const electron = require('electron');
 const app = electron.app;
 //创建原生浏览器窗口的模块
 const BrowserWindow = electron.BrowserWindow;
+const ipc = electron.ipcMain;
 //保持其全局引用，不然JS被GC，windows自动关闭
 var onlineStatusWindow;
 
@@ -11,4 +12,8 @@ var onlineStatusWindow;
 app.on('ready', function() {
   onlineStatusWindow = new BrowserWindow({ width: 0, height: 0, show: false });
   onlineStatusWindow.loadURL('file://' + __dirname + '/online-status.html');
+});
+
+ipc.on('online-status-changed', function(event, status) {
+  console.log(status);
 });

@@ -2,14 +2,15 @@
 <html>
   <body>
     <script>
-      var alertOnlineStatus = function() {
-        window.alert(navigator.onLine ? 'online' : 'offline');
+      var ipc = require('ipc');
+      var updateOnlineStatus = function() {
+        ipc.send('online-status-changed', navigator.onLine ? 'online' : 'offline');
       };
 
-      window.addEventListener('online',  alertOnlineStatus);
-      window.addEventListener('offline',  alertOnlineStatus);
+      window.addEventListener('online',  updateOnlineStatus);
+      window.addEventListener('offline',  updateOnlineStatus);
 
-      alertOnlineStatus();
+      updateOnlineStatus();
     </script>
   </body>
 </html>
